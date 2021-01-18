@@ -57,17 +57,37 @@
         let lastChecked;
 
         function handleCheck(e) {
+            let inBetween = false;
             // check if they had the shift key down
             // AND check that they are checking the box
-            let inBetween = false;
-            
             if (e.shiftKey && this.checked) {
                 // go ahead and do what we please
                 // loop over every single checkbox
-                checkboxes.forEach(box => {
-                    console.log(box);
+                checkboxes.forEach(checkbox => {
+                    if (checkbox === this || checkbox === lastChecked) {
+                        inBetween = !inBetween;
+                    }
+
+                    if (inBetween) {
+                        checkbox.checked = true;
+                    }
                 });
             }
+
+            if (e.shiftKey && !this.checked) {
+                // go ahead and do what we please
+                // loop over every single checkbox
+                checkboxes.forEach(checkbox => {
+                    if (checkbox === this || checkbox === lastChecked) {
+                        inBetween = !inBetween;
+                    }
+
+                    if (inBetween) {
+                        checkbox.checked = false;
+                    }
+                });
+            }
+            
             lastChecked = this;
         }
 
